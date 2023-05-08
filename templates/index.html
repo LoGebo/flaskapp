@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Code Highlighter</title>
+    <style>
+      body {
+        background-color: #f0f0f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+      }
+      textarea {
+        width: 80%;
+        font-family: monospace;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+      }
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0069d9;
+      }
+      #output {
+        width: 80%;
+        border-radius: 5px;
+        border: 1px solid #aaa;
+        padding: 10px;
+        background-color: white;
+        margin-top: 10px;
+      }
+      .footer {
+
+        padding: 50px;
+        text-align: center;
+        color: #0e0d0d;
+      }
+    </style>
+    <script>
+      async function submitCode() {
+        const codeInput = document.getElementById("python-code");
+        const codeOutput = document.getElementById("output");
+        const data = new URLSearchParams();
+        data.append("python_code", codeInput.value);
+
+        const response = await fetch("/highlight", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: data,
+        });
+        const result = await response.json();
+        codeOutput.innerHTML = result.output;
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Python Code Highlighter</h1>
+    <textarea id="python-code" rows="10"></textarea>
+    <button type="button" onclick="submitCode()">Submit</button>
+    <div id="output"></div>
+    <footer class="footer">
+      Jesús Daniel Martínez y Luis Fernando Perez © 2023. All rights reserved.
+    </footer>
+  </body>
+</html>
